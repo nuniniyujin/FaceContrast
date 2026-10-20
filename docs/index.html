@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FaceContrast: interpretable face contrast modeling for smartphone portrait rendering. A controlled dataset and three perceptually grounded contrast measures.">
+  <meta name="theme-color" content="#f7f8f5">
+  <meta property="og:title" content="FaceContrast · Interpretable Face Contrast Modeling">
+  <meta property="og:description" content="Understanding smartphone portraits through overall contrast, eye contrast, and micro-contrast.">
+  <meta property="og:type" content="website">
+  <title>FaceContrast | Interpretable Face Contrast Modeling</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav-wrap" aria-label="Main navigation">
+      <a class="wordmark" href="#top"><span class="brand-icon" aria-hidden="true"></span>FaceContrast</a>
+      <div class="nav-links"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#dataset">Dataset</a><a href="#results">Results</a><a href="https://github.com/nuniniyujin/FaceContrast" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="paper-title">
+      <p class="eyebrow">COMPUTATIONAL PHOTOGRAPHY · PORTRAIT PERCEPTION</p>
+      <p class="project-name">Face<span>Contrast</span></p>
+      <h1 id="paper-title">Interpretable Face Contrast Modeling<br class="desktop-break"> for Smartphone Portrait Rendering</h1>
+      <div class="authors">
+        <span>Yujin Cho<sup>1,2</sup></span><span>Benoît Pochon<sup>2</sup></span><span>Jean-Michel Morel<sup>3</sup></span><span>Gabriele Facciolo<sup>1</sup></span>
+      </div>
+      <div class="affiliations"><p><sup>1</sup>Université Paris-Saclay, CNRS, ENS Paris-Saclay, Centre Borelli, France</p><p><sup>2</sup>DXOMARK, France <span class="affiliation-gap"><sup>3</sup>Lingnan University, Hong Kong SAR, China</span></p></div>
+      <div class="resource-links">
+        <a class="button primary" href="https://arxiv.org/pdf/2610.26517" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16h14V8zm0 0v5h5M8 12h8M8 16h6"/></svg>Paper <span class="button-meta">PDF</span></a>
+        <a class="button" href="https://github.com/nuniniyujin/FaceContrast" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></svg>GitHub</a>
+        <a class="button" href="#dataset"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></svg>Dataset</a>
+        <a class="button" href="#citation"><span class="quote-icon" aria-hidden="true">“</span>BibTeX</a>
+      </div>
+      <figure class="teaser">
+        <div class="figure-topline"><span>ONE FACE. DIFFERENT RENDERINGS.</span><span>Examples from the paper</span></div>
+        <a class="figure-link" href="assets/figures/1column_mannequin3.pdf" target="_blank" rel="noopener" aria-label="View full-size portrait rendering comparison"><img src="assets/hero.webp" width="1800" height="921" alt="Three captures of the same Eugene mannequin: pronounced facial shadows, harsh fine texture, and clearly defined eyes with smoother skin." fetchpriority="high"></a>
+        <div class="teaser-labels"><span><b>01</b> Tonal separation</span><span><b>02</b> Fine skin detail</span><span><b>03</b> Eye definition</span></div>
+        <figcaption>The same face can look remarkably different across smartphones and lighting.<br>We disentangle its contrast into <strong>three interpretable perceptual components.</strong></figcaption>
+      </figure>
+    </section>
+
+    <section class="abstract-band" id="overview">
+      <div class="reading-width">
+        <p class="eyebrow">THE IDEA</p><h2>Face contrast is more than a single number.</h2>
+        <p class="lead">Overall tonal separation, eye definition, and fine skin detail contribute differently to how a portrait looks. We measure each component and validate it against human perception.</p>
+        <details class="abstract-details" open><summary>Abstract</summary><p id="paper-abstract">The quality of smartphone portrait photography has become increasingly important to both manufacturers and users. Recent devices use complex computational pipelines to improve facial rendering under varied lighting. These pipelines vary widely across manufacturers, so the same portrait can look noticeably different across smartphones. These differences affect multiple aspects of facial appearance, making perceptual preference difficult to characterize with a single measure. To address this, we propose an interpretable framework that decomposes face contrast into three components: overall facial tonal separation, eye‑region contrast, and micro‑contrast of fine skin details.
+We formulate dedicated metrics for each component and validate them via pairwise human judgments, demonstrating that our approach correlates more closely with human contrast perception than traditional contrast measures. To support this analysis, we introduce a realistic mannequin‑based dataset designed for systematic facial contrast evaluation, comprising 508 full‑resolution captures from 29 smartphones under diverse lighting, with region‑specific masks and extensive pairwise perceptual annotations. As a downstream analysis, we show that combining the three component‑wise metrics provides a meaningful basis for modeling balanced facial contrast preference in a controlled setting, and we present a preliminary evaluation on a smaller real‑portrait dataset indicating that insights derived from the mannequin study can extend to real images. Our work provides a controlled first step toward defining and evaluating face contrast in portrait imaging.</p></details>
+      </div>
+    </section>
+
+    <section class="section container" id="method">
+      <div class="section-heading"><p class="eyebrow">01 / METHOD</p><h2>What do we mean by face contrast?</h2><p>We define three components of contrast and study how their balance relates to portrait preference.</p></div>
+      <div class="contrast-definitions" aria-label="Definitions of face contrast">
+        <article class="contrast-definition">
+          <p class="definition-kind">CONTRAST AMOUNT · FACE</p>
+          <h3>Overall contrast</h3>
+          <p>The global tonal separation across the face: how clearly bright and dark regions are separated. It describes facial shading and the transitions that give the face depth.</p>
+          <p class="definition-question">How strongly are light and shadow separated across the face?</p>
+        </article>
+        <article class="contrast-definition">
+          <p class="definition-kind">CONTRAST AMOUNT · EYES</p>
+          <h3>Eye contrast</h3>
+          <p>The local lightness separation within the eye region, between dark structures such as the pupil and brighter structures such as the sclera. It describes how distinctly these structures appear.</p>
+          <p class="definition-question">How clearly do dark and bright structures stand apart within the eyes?</p>
+        </article>
+        <article class="contrast-definition">
+          <p class="definition-kind">CONTRAST AMOUNT · SKIN DETAIL</p>
+          <h3>Micro-contrast</h3>
+          <p>The visibility of fine facial details, such as skin pores and small local structures. It describes how strongly fine skin texture is rendered in the final portrait.</p>
+          <p class="definition-question">How visible and pronounced are the fine details of the skin?</p>
+        </article>
+        <article class="contrast-definition balanced-definition">
+          <div><p class="definition-kind">PERCEPTUAL PREFERENCE · THE THREE COMPONENTS TOGETHER</p><h3>Balanced contrast</h3></div>
+          <div><p>The perceived harmony among overall tonal separation, eye definition, and fine-detail visibility: whether they form a natural and visually pleasing balance.</p><p class="definition-question">Which portrait has the more pleasing balance of facial contrast?</p><p class="balance-note">More contrast is not always better. Balanced contrast is a separate preference judgment over the three components, rather than a fourth measure of contrast amount.</p></div>
+        </article>
+      </div>
+      <div class="measurement-heading"><h3>How we measure the three components</h3><p>Select a component to explore its metric and examples.</p></div>
+      <div class="component-tabs" role="tablist" aria-label="Face contrast components">
+        <button type="button" role="tab" id="tab-overall" aria-controls="panel-overall" aria-selected="true" data-component="overall"><span class="tab-number">01</span><span>Overall contrast<small>Depth & tonal separation</small></span></button>
+        <button type="button" role="tab" id="tab-eye" aria-controls="panel-eye" aria-selected="false" tabindex="-1" data-component="eye"><span class="tab-number">02</span><span>Eye contrast<small>Dark–bright separation</small></span></button>
+        <button type="button" role="tab" id="tab-micro" aria-controls="panel-micro" aria-selected="false" tabindex="-1" data-component="micro"><span class="tab-number">03</span><span>Micro-contrast<small>Fine-detail visibility</small></span></button>
+      </div>
+      <div class="component-panel" role="tabpanel" id="panel-overall" aria-labelledby="tab-overall" tabindex="0">
+        <div class="component-copy"><span class="region-tag">FACE REGION</span><h3>The structure of light and shadow.</h3><p>Overall contrast captures tonal transitions across the face. Local lightness variation is normalized by the local mean and pooled over five spatial scales, from fine shading to broader facial structure.</p><div class="formula math-formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Local contrast equals local standard deviation divided by local mean lightness plus epsilon."><mrow><msub><mi>c</mi><mi>r</mi></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msub><mi>σ</mi><mi>r</mi></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><msub><mi>μ</mi><mi>r</mi></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>+</mo><mi>ε</mi></mrow></mfrac></mrow></math></div><p class="fine-print">Mean response over the face, averaged across window sizes 16, 32, 64, 128, and 256.</p></div>
+        <div class="method-schematic" aria-label="Overall contrast computation">
+          <p class="schematic-label">COMPUTATION AT A GLANCE</p>
+          <p class="schematic-title">Five window sizes, one face-wide measure.</p>
+          <div class="scale-sizes" aria-label="Square window sizes in pixels"><span>16 × 16</span><span>32 × 32</span><span>64 × 64</span><span>128 × 128</span><span>256 × 256</span></div>
+          <ol class="method-steps"><li><strong>Measure local tonal variation</strong><span>Normalize local standard deviation by local mean lightness.</span></li><li><strong>Pool within the face</strong><span>Average the response over the face mask at each scale.</span></li><li><strong>Combine the scales</strong><span>Average the five scale-wise values to obtain overall contrast.</span></li></ol>
+        </div>
+      </div>
+      <div class="component-panel" role="tabpanel" id="panel-eye" aria-labelledby="tab-eye" tabindex="0" hidden>
+        <div class="component-copy"><span class="region-tag">EYE REGION</span><h3>Small region. Strong visual impact.</h3><p>Eye contrast measures the separation between dark and bright structures inside the eyes. A single Otsu threshold partitions lightness values from both eye masks into two classes.</p><div class="formula math-formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Eye contrast is the bright-class mean minus the dark-class mean."><mrow><msub><mi>C</mi><mtext>eye</mtext></msub><mo>=</mo><msub><mi>μ</mi><mtext>bright</mtext></msub><mo>−</mo><msub><mi>μ</mi><mtext>dark</mtext></msub></mrow></math></div><p class="fine-print">Computed in normalized CIELAB lightness, using the merged left and right eye masks.</p></div>
+        <div class="method-schematic" aria-label="Eye contrast computation">
+          <p class="schematic-label">COMPUTATION AT A GLANCE</p>
+          <p class="schematic-title">Separate lightness. Compare the means.</p>
+          <p class="eye-input">Lightness values from both eye regions</p>
+          <div class="otsu-divider"><span>One Otsu threshold</span></div>
+          <div class="eye-classes"><div class="dark-class"><span>Dark class</span><strong>μ<sub>dark</sub></strong><small>Mean of darker pixels</small></div><div class="bright-class"><span>Bright class</span><strong>μ<sub>bright</sub></strong><small>Mean of brighter pixels</small></div></div>
+          <p class="eye-output"><strong>Eye contrast = μ<sub>bright</sub> − μ<sub>dark</sub></strong><span>A larger difference indicates stronger eye contrast.</span></p>
+        </div>
+      </div>
+      <div class="component-panel" role="tabpanel" id="panel-micro" aria-labelledby="tab-micro" tabindex="0" hidden>
+        <div class="component-copy"><span class="region-tag">SKIN REGION</span><h3>The visibility of fine facial detail.</h3><p>Micro-contrast measures fine skin texture while reducing the influence of broad shading. We extract texture in log-lightness space, measure its local energy, and compress strong responses before pooling over the skin.</p>
+          <div class="formula math-formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Micro contrast is the mean compressed local energy over the retained skin pixels."><mrow><msub><mi>C</mi><mtext>micro</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mo>|</mo><mi>𝒦</mi><mo>|</mo></mrow></mfrac><munder><mo>∑</mo><mrow><mi>x</mi><mo>∈</mo><mi>𝒦</mi></mrow></munder><msub><mi>S</mi><mtext>local</mtext></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math></div>
+          <div class="math-definition"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Retain skin pixels with responses between the 10th and 90th percentiles."><mrow><mi>𝒦</mi><mo>=</mo><mo>{</mo><mi>x</mi><mo>∈</mo><msub><mi>Ω</mi><mi>s</mi></msub><mo>|</mo><msub><mi>q</mi><mn>10</mn></msub><mo>≤</mo><msub><mi>S</mi><mtext>local</mtext></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>≤</mo><msub><mi>q</mi><mn>90</mn></msub><mo>}</mo></mrow></math></div>
+          <p class="fine-print">Here, Ω<sub>s</sub> is the skin mask. The thresholds q<sub>10</sub> and q<sub>90</sub> are the 10th and 90th percentiles of S<sub>local</sub> within that mask. Averaging the retained responses gives C<sub>micro</sub>.</p>
+        </div>
+        <div class="method-schematic" aria-label="Micro-contrast computation">
+          <p class="schematic-label">COMPUTATION AT A GLANCE</p>
+          <p class="schematic-title">Isolate texture. Measure its visible strength.</p>
+          <ol class="method-steps math-steps">
+            <li><strong>Transform lightness</strong><div class="step-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="L log equals log of L plus epsilon."><mrow><msub><mi>L</mi><mtext>log</mtext></msub><mo>=</mo><mi>log</mi><mrow><mo>(</mo><mrow><mi>L</mi><mo>+</mo><mi>ε</mi></mrow><mo>)</mo></mrow></mrow></math></div><span>L is CIELAB lightness normalized to [0, 1]; ε is a small constant for numerical stability.</span></li>
+            <li><strong>Isolate fine-scale detail</strong><div class="step-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Difference of Gaussians applied to log lightness."><mrow><msub><mi>D</mi><mtext>log</mtext></msub><mo>=</mo><msub><mi>G</mi><msub><mi>σ</mi><mtext>fine</mtext></msub></msub><mo>∗</mo><msub><mi>L</mi><mtext>log</mtext></msub><mo>−</mo><msub><mi>G</mi><msub><mi>σ</mi><mtext>coarse</mtext></msub></msub><mo>∗</mo><msub><mi>L</mi><mtext>log</mtext></msub></mrow></math></div><div class="step-parameters"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Fine sigma is one over square root of two; coarse sigma is three over square root of two."><mrow><msub><mi>σ</mi><mtext>fine</mtext></msub><mo>=</mo><mfrac><mn>1</mn><msqrt><mn>2</mn></msqrt></mfrac><mo>,</mo><mspace width="1em"/><msub><mi>σ</mi><mtext>coarse</mtext></msub><mo>=</mo><mfrac><mn>3</mn><msqrt><mn>2</mn></msqrt></mfrac></mrow></math></div><span>G<sub>σ</sub> denotes Gaussian smoothing; ∗ denotes convolution.</span></li>
+            <li><strong>Measure local RMS energy</strong><div class="step-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Local energy is the square root of the mean squared log DoG response in the local window."><mrow><msub><mi>E</mi><mtext>local</mtext></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msqrt><mfrac><mn>1</mn><mrow><mo>|</mo><mrow><mi>N</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>|</mo></mrow></mfrac><munder><mo>∑</mo><mrow><mi>y</mi><mo>∈</mo><mi>N</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></munder><msup><mrow><msub><mi>D</mi><mtext>log</mtext></msub><mrow><mo>(</mo><mi>y</mi><mo>)</mo></mrow></mrow><mn>2</mn></msup></msqrt></mrow></math></div><span>N(x) is an 11 × 11 neighborhood around pixel x.</span></li>
+            <li><strong>Apply perceptual compression</strong><div class="step-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="The local energy is raised to the power 0.6."><mrow><msub><mi>S</mi><mtext>local</mtext></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mrow><mo>(</mo><mrow><msub><mi>E</mi><mtext>local</mtext></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mn>0.6</mn></msup></mrow></math></div><span>Finally, retain the central 80% of responses within the skin mask and average them.</span></li>
+          </ol>
+        </div>
+      </div>
+      <aside class="takeaway"><span aria-hidden="true">↳</span><p><strong>From contrast measures to balanced contrast preference.</strong> In the controlled mannequin study, a second-order polynomial regressor combines the overall, eye, and micro-contrast metrics to predict separately collected human judgments of balanced contrast.</p></aside>
+    </section>
+
+    <section class="dataset-band" id="dataset"><div class="section container">
+      <div class="section-heading"><p class="eyebrow">02 / DATASET</p><h2>Controlled captures. Human judgments.</h2><p>Two realistic mannequins, Eugene and Diana, let us compare rendering while keeping facial structure and surface texture fixed.</p></div>
+      <dl class="stats"><div><dt>508</dt><dd>Full-resolution captures</dd></div><div><dt>29</dt><dd>Smartphones</dd></div><div><dt>2,400</dt><dd>Region-specific masks</dd></div><div><dt>20,000</dt><dd>Pairwise comparisons</dd></div></dl>
+      <figure class="dataset-figure"><a class="figure-link" href="assets/figures/Face_Contrast_rendering_Figure2.pdf" target="_blank" rel="noopener"><img src="assets/dataset.webp" width="1800" height="686" alt="Eugene and Diana in the laboratory across four illumination levels, with close-up insets showing facial rendering." loading="lazy"></a><div class="lighting-labels"><span>5 lux</span><span>100 lux</span><span>1,000 lux</span><span>10,000 lux</span></div><figcaption>Four illumination levels and multiple backlight conditions (ΔEV = 0, 4, 7, 9).</figcaption></figure>
+      <div class="dataset-detail"><figure><a class="figure-link" href="assets/figures/mask_examples.pdf" target="_blank" rel="noopener"><img src="assets/masks.webp" width="1400" height="1092" alt="Face, eye, and skin masks isolating regions for the three contrast measures." loading="lazy"></a><figcaption>Dedicated face, eye, and skin regions.</figcaption></figure><div><h3>From a controlled scene to perceptual scores.</h3><p>Original captures and contrast-adjusted variants form an 800-image annotation set. Trained image-quality experts completed four separate comparison tasks over 160 hours.</p><p>Pairwise judgments are converted to Just Objectionable Difference (JOD) scores. A difference of 1 JOD corresponds to a 75% choice probability for the higher-scoring image.</p><p class="availability"><strong>Dataset access</strong><br>A download link has not yet been added to this project page. See the <a href="https://github.com/nuniniyujin/FaceContrast" target="_blank" rel="noopener noreferrer">project repository ↗</a> for available resources.</p></div></div>
+    </div></section>
+
+    <section class="section container" id="results">
+      <div class="section-heading"><p class="eyebrow">03 / RESULTS</p><h2>Aligned with what people see.</h2><p>Correlation with component-specific human judgments, without fitting the three contrast metrics to the annotations.</p></div>
+      <div class="table-wrap"><table><caption>Component-wise agreement with human contrast judgments</caption><thead><tr><th scope="col" rowspan="2">Proposed measure</th><th scope="colgroup" colspan="2">Within-lighting</th><th scope="colgroup" colspan="2">Mixed-lighting</th></tr><tr><th scope="col">PLCC ↑</th><th scope="col">SRCC ↑</th><th scope="col">PLCC ↑</th><th scope="col">SRCC ↑</th></tr></thead><tbody><tr><th scope="row">Overall contrast</th><td>0.792</td><td>0.780</td><td>0.688</td><td>0.693</td></tr><tr><th scope="row">Eye contrast</th><td>0.879</td><td>0.855</td><td>0.892</td><td>0.891</td></tr><tr><th scope="row">Micro-contrast</th><td>0.849</td><td>0.842</td><td>0.797</td><td>0.787</td></tr></tbody></table></div>
+      <p class="table-note">Within-lighting: device-disjoint evaluation on Groups 1–4. Mixed-lighting: evaluation on Group 5. Values reproduced from the main paper; see the paper for baselines and evaluation details.</p>
+      <div class="real-portraits"><div><p class="eyebrow">BEYOND THE LAB</p><h3>A first step toward real portraits.</h3><p>A preliminary evaluation uses 444 images across 10 subjects/scenes, with varied facial appearances, poses, and device processing.</p><p>The proposed zero-shot metrics achieve SRCC of <strong>0.825</strong> for overall contrast, <strong>0.768</strong> for eye contrast, and <strong>0.731</strong> for micro-contrast, macro-averaged across scenes.</p><p class="fine-print">Broader evaluation across identities, skin tones, poses, and capture conditions remains future work.</p></div><figure><a class="figure-link" href="assets/figures/1column_real_portrait_v2.pdf" target="_blank" rel="noopener"><img src="assets/real-portraits.webp" width="1600" height="887" alt="Real portrait examples across devices and contrast-adjusted variants, showing two subjects." loading="lazy"></a><figcaption>Examples from the preliminary real-portrait analysis.</figcaption></figure></div>
+    </section>
+
+    <section class="citation-band" id="citation"><div class="reading-width section">
+      <div class="citation-heading"><div><p class="eyebrow">REFERENCE</p><h2>BibTeX</h2></div><button type="button" class="button copy-button" id="copy-citation">Copy citation</button></div>
+      <p class="citation-note">Accepted at WACV 2027. Available on <a href="https://arxiv.org/abs/2610.26517" target="_blank" rel="noopener">arXiv:2610.26517</a>.</p>
+      <pre><code id="bibtex">@misc{cho2026facecontrast,
+  title     = {Interpretable Face Contrast Modeling for
+               Smartphone Portrait Rendering},
+  author    = {Cho, Yujin and Pochon, Beno{\^i}t and
+               Morel, Jean-Michel and Facciolo, Gabriele},
+  year      = {2026},
+  eprint    = {2610.26517},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url       = {https://arxiv.org/abs/2610.26517}
+}</code></pre><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+    </div></section>
+    <section class="acknowledgements reading-width"><h2>Acknowledgements</h2><p>This work was financed by ANRT grant N° 2023/0335 and used GENCI-IDRIS HPC and storage resources on Jean Zay under allocations AD011017622, AD011014895R2, AD011014895R1, and AD011014895R.</p></section>
+  </main>
+  <footer class="container"><a class="wordmark" href="#top">FaceContrast</a><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>
