@@ -1,6 +1,6 @@
 # FaceContrast
 
-**Interpretable Face Contrast Modeling for Smartphone Portrait Rendering**
+**[WACV 2027] Interpretable Face Contrast Modeling for Smartphone Portrait Rendering**
 
 Yujin Cho, Benoît Pochon, Jean-Michel Morel, Gabriele Facciolo
 
