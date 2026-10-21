@@ -15,9 +15,7 @@ Code coming soon!
 
 ## Dataset Access
 
-The dataset introduced in this paper is available for research purposes upon request. Access to the dataset is subject to approval and acceptance of the applicable Terms of Use.
-An online dataset access request form will be provided soon. In the meantime, please contact yujin.cho@ens-paris-saclay.fr for inquiries regarding dataset access.
-
+An online dataset request form will be available soon.
 
 ## License
 
