@@ -11,7 +11,7 @@ FaceContrast decomposes facial contrast into three interpretable components: ove
 
 ## Code
 
-Code coming soon!
+Code will be available soon.
 
 ## Dataset Access
 
